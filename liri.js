@@ -61,7 +61,7 @@ function spotifyThis(funcValue) {
       return;
     }
     // logic for looping through the object to grab song info
-    if(!error){
+    if(!err){
       for(var i = 0; i < data.tracks.items.length; i++){
         var songInfo = data.tracks.items[i];
         //artist
