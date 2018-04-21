@@ -1,10 +1,11 @@
 // dependencies 
 require('dotenv').config();
 var keys = require('./keys.js');
-var spotify = require('node-spotify-api');
+var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
 var request = ('request');
 var fs = require('fs');
+var spotify = new Spotify(keys.spotify);
 var dataValue = process.argv[2];
 var funcValue = process.argv[3];
 
@@ -45,17 +46,36 @@ function myTweets() {
       }
     }
   });
-
 };
 
 
+// spotify api logic
+function spotifyThis(funcValue) {
+  if (funcValue == null) {
+    funcValue = 'bye bye bye';
+  }
+  spotify.search({ type: 'track', query: funcValue}, function(err, data){
+    // error handler
+    if (err) {
+      console.log(`Uh oh, an error occured ${err}`);
+      return;
+    }
+    // logic for looping through the object to grab song info
+    if(!error){
+      for(var i = 0; i < data.tracks.items.length; i++){
+        var songInfo = data.tracks.items[i];
+        //artist
+        console.log(`Artist: ${songInfo.artists[0].name}`);
+        //song name
+        console.log(`Song: ${songInfo.name}`);
+        //album name
+        console.log(`Album: ${songInfo.album.name}`);
+        //spotify preview link
+        console.log(`Preview URL: ${songInfo.preview_url}`);
+        console.log(`-----------------------`);
+      }
+    }
+  });
 
-// var spotify = new Spotify(keys.spotify);
-// // spotify api logic
-// spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
-//     if (err) {
-//       return console.log('Error occurred: ' + err);
-//     }
-   
-//   console.log(data); 
-//   }); 
+
+}
