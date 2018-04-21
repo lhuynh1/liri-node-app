@@ -3,7 +3,7 @@ require('dotenv').config();
 var keys = require('./keys.js');
 var Spotify = require('node-spotify-api');
 var Twitter = require('twitter');
-var request = ('request');
+var request = require('request');
 var fs = require('fs');
 var spotify = new Spotify(keys.spotify);
 var dataValue = process.argv[2];
@@ -76,6 +76,32 @@ function spotifyThis(funcValue) {
       }
     }
   });
-
-
 }
+
+
+  // omdb logic
+  function omdbThis (funcValue) {
+    // if no parameter is entered, set it to 
+    if (funcValue === null) {
+      funcValue = 'Harry Potter';
+    }
+
+    var url =  "http://www.omdbapi.com/?t=" + funcValue + "&tomatoes=true&r=json&apikey=trilogy";
+
+    request(url, function(err, response, body) {
+      if (!err && response.statusCode == 200) {
+        jsonBody = JSON.parse(body);
+        // console.log(response);
+
+        console.log(`Title: ${jsonBody.Title}`);
+        console.log(`Year: ${jsonBody.Year}`);
+        console.log(`IMDB Rating: ${jsonBody.imdbRating}`);
+        // console.log(`Rotten Tomatoes Rating: ${jsonBody.`)
+        console.log(`Plot: ${jsonBody.Plot}`);
+        console.log(`Actors: ${jsonBody.Actors}`);
+
+      }
+    })
+  }
+
+
