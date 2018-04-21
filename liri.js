@@ -104,4 +104,19 @@ function spotifyThis(funcValue) {
     })
   }
 
+  function doWhatItSays (funcValue) {
+    fs.readFile('random.txt', 'utf8', function(err, data) {
+      if (err) {
+        console.log(err);
+      } else {
+        var dataArr = data.split(',');
+        // after splitting data into an array, we can grab what we need utilizing index
+        if (dataArr[0] === 'spotify') {
+          spotifyThis(dataArr[1]);
+        }
+      }
+      
+    });
+  }
+
 
